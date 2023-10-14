@@ -5,9 +5,15 @@ from tests.service.answer_service import AnswerService
 from tests.service.comment_service import CommentService
 
 
+def pytest_addoption(parser):
+    parser.addoption(
+        "--url", action="store", default="http://localhost:8080"
+    )
+
+
 @pytest.fixture(scope="session")
-def app_url():
-    return "http://localhost:8080"
+def app_url(request):
+    return request.config.getoption('--url')
 
 
 @pytest.fixture(scope="session")
