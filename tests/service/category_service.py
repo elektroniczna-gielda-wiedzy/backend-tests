@@ -10,12 +10,13 @@ class CategoryService:
         list_url = f"{self.app_url}/api/v1/category"
         return requests.get(url=list_url, headers={"Authorization": self.auth_token})
 
-    def add(self, category_type, names, parent_id):
+    def add(self, category_type, names, parent_id, categoryStatus):
         add_url = f"{self.app_url}/api/v1/category"
         request_body = {
             "type": category_type,
             "names": names,
-            "parent_id": parent_id
+            "parent_id": parent_id,
+            "status":categoryStatus
         }
         return requests.post(url=add_url, json=request_body, headers={"Authorization": self.auth_token})
 

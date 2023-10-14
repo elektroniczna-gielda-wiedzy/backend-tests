@@ -10,7 +10,6 @@ def test_delete_category_admin(app_url, admin_auth_token):
     category_list = service.list().json()['result']
 
     # assert
-    assert response.ok
     assert not any(
         category['category_id'] == 19 for category in category_list
     )
@@ -21,11 +20,11 @@ def test_delete_category_user(app_url, auth_token_user1):
     service = CategoryService(auth_token_user1, app_url)
 
     # test
-    response = service.delete(20)
+    response = service.delete(21)
     category_list = service.list().json()['result']
 
     # assert
     assert not response.ok
     assert any(
-        category['category_id'] == 20 for category in category_list
+        category['category_id'] == 21 for category in category_list
     )

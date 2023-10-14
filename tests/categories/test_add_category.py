@@ -3,10 +3,10 @@ import pytest
 from ..service.category_service import CategoryService
 
 
-@pytest.mark.parametrize("polish_name, english_name, category_type, parent_id", [
-    ("Socjologia", "Sociology", 0, 3),
-    ("Nauki humanistyczne", "Humanities", 1, None)])
-def test_add_category_admin(app_url, admin_auth_token, polish_name, english_name, category_type, parent_id):
+@pytest.mark.parametrize("polish_name, english_name, category_type, parent_id, status", [
+    ("Informatyka i Systemy Inteligentne", "Computer Science and Intelligent Systems", 0, 2, "ACTIVE"),
+    ("Nauki humanistyczne", "Humanities", 1, None, "ACTIVE")])
+def test_add_category_admin(app_url, admin_auth_token, polish_name, english_name, category_type, parent_id, status):
     # setup
     service = CategoryService(admin_auth_token, app_url)
     translations = [{
@@ -18,7 +18,7 @@ def test_add_category_admin(app_url, admin_auth_token, polish_name, english_name
     }]
 
     # test
-    response = service.add(category_type, translations, parent_id)
+    response = service.add(category_type, translations, parent_id, status)
     category_id = response.json()['result'][0]['category_id']
     categories_list = service.list().json()['result']
 
@@ -39,10 +39,11 @@ def test_add_category_admin(app_url, admin_auth_token, polish_name, english_name
     service.delete(category_id)
 
 
-@pytest.mark.parametrize("polish_name, english_name, category_type, parent_id", [
-    ("Socjologia2", "Sociology2", 0, 3),
-    ("Nauki humanistyczne2", "Humanities2", 1, None)])
-def test_add_category_user_no_access(app_url, auth_token_user1, polish_name, english_name, category_type, parent_id):
+@pytest.mark.parametrize("polish_name, english_name, category_type, parent_id, status", [
+    ("Socjologia2", "Sociology2", 0, 2, "ACTIVE"),
+    ("Nauki humanistyczne2", "Humanities2", 1, None, "ACTIVE")])
+def test_add_category_user_no_access(app_url, auth_token_user1, polish_name, english_name, category_type, parent_id,
+                                     status):
     # setup
     service = CategoryService(auth_token_user1, app_url)
     translations = [{
@@ -54,7 +55,7 @@ def test_add_category_user_no_access(app_url, auth_token_user1, polish_name, eng
     }]
 
     # test
-    response = service.add(category_type, translations, parent_id)
+    response = service.add(category_type, translations, parent_id, status)
     categories_list = service.list().json()['result']
 
     # assert
