@@ -4,8 +4,8 @@ from ..service.category_service import CategoryService
 
 
 @pytest.mark.parametrize("polish_name, english_name, category_type, parent_id, status", [
-    ("Informatyka i Systemy Inteligentne", "Computer Science and Intelligent Systems", 0, 2, "ACTIVE"),
-    ("Nauki humanistyczne", "Humanities", 1, None, "ACTIVE")])
+    ("Informatyka i Systemy Inteligentne", "Computer Science and Intelligent Systems", 0, 2, 0),
+    ("Nauki humanistyczne", "Humanities", 1, None, 0)])
 def test_add_category_admin(app_url, admin_auth_token, polish_name, english_name, category_type, parent_id, status):
     # setup
     service = CategoryService(admin_auth_token, app_url)
@@ -40,8 +40,8 @@ def test_add_category_admin(app_url, admin_auth_token, polish_name, english_name
 
 
 @pytest.mark.parametrize("polish_name, english_name, category_type, parent_id, status", [
-    ("Socjologia2", "Sociology2", 0, 2, "ACTIVE"),
-    ("Nauki humanistyczne2", "Humanities2", 1, None, "ACTIVE")])
+    ("Socjologia2", "Sociology2", 0, 2, 0),
+    ("Nauki humanistyczne2", "Humanities2", 1, None, 0)])
 def test_add_category_user_no_access(app_url, auth_token_user1, polish_name, english_name, category_type, parent_id,
                                      status):
     # setup

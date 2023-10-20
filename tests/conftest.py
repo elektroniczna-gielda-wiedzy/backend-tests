@@ -75,7 +75,7 @@ def admin_auth_token(get_auth_token):
 def create_temporary_entry(app_url):
     def entry_cleanup(
             auth_token: str,
-            entry_type: int = 3,
+            entry_type: int = 2,
             title: str = "Example Title",
             content: str = "Example Content",
             categories: list = None,
