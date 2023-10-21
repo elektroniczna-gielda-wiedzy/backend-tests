@@ -94,14 +94,14 @@ def test_mark_other_answer(auth_token_user1, auth_token_user2, auth_token_user3,
     assert answer_list[1]['top_answer'] is False
     assert answer_list[2]['top_answer'] is False
     assert answer_list[0]['content'] == 'Comment1'
-    # assert answer_list[1]['content'] == 'Comment3' uncomment when sorting is implemented
-    # assert answer_list[2]['content'] == 'Comment2'
+    assert answer_list[1]['content'] == 'Comment3'
+    assert answer_list[2]['content'] == 'Comment2'
     assert answer_list2[0]['top_answer'] is True
     assert answer_list2[1]['top_answer'] is False
     assert answer_list2[2]['top_answer'] is False
     assert answer_list2[0]['content'] == 'Comment3'
-    # assert answer_list2[1]['content'] == 'Comment1'
-    # assert answer_list2[2]['content'] == 'Comment2'
+    assert answer_list2[1]['content'] == 'Comment1'
+    assert answer_list2[2]['content'] == 'Comment2'
 
     # cleanup
     cleanup_entry()
@@ -117,25 +117,31 @@ def test_unmark_top_answer(auth_token_user1, auth_token_user2, auth_token_user3,
     response = service.add(entry_id, "Comment1", None)
     response3 = service3.add(entry_id, "Comment3", None)
     user1_answer_id = response.json()['result'][0]['answer_id']
+    user2_answer_id = response.json()['result'][0]['answer_id']
     response4 = service3.vote(entry_id, user1_answer_id, 1)
+    response5 = service3.vote(entry_id, user2_answer_id, 1)
 
     # test
-    response5 = service2.top_answer(entry_id, user1_answer_id, 1)
+    response6 = service2.top_answer(entry_id, user1_answer_id, 1)
     answer_list = service.list(entry_id).json()['result']
-    response6 = service2.top_answer(entry_id, user1_answer_id, -1)
+    response7 = service2.top_answer(entry_id, user1_answer_id, -1)
+    service3.vote(entry_id, user1_answer_id, -1)
     answer_list2 = service.list(entry_id).json()['result']
 
     # assert
-    assert response.ok and response2.ok and response3.ok and response4.ok and response5.ok and response6.ok
+    assert response.ok and response2.ok and response3.ok and response4.ok and response5.ok and response6.ok and response7.ok
     assert answer_list[0]['top_answer'] is True
     assert answer_list[1]['top_answer'] is False
     assert answer_list[2]['top_answer'] is False
     assert answer_list[0]['content'] == 'Comment1'
+    assert answer_list[1]['content'] == 'Comment2'
+    assert answer_list[2]['content'] == 'Comment3'
     assert answer_list2[0]['top_answer'] is False
     assert answer_list2[1]['top_answer'] is False
     assert answer_list2[2]['top_answer'] is False
-    # assert answer_list[1]['content'] == 'Comment2' uncomment when sorting is implemented
-    # assert answer_list[2]['content'] == 'Comment3'
+    assert answer_list2[0]['content'] == 'Comment2'
+    assert answer_list2[1]['content'] == 'Comment3'
+    assert answer_list2[2]['content'] == 'Comment1'
 
     # cleanup
     cleanup_entry()

@@ -15,3 +15,16 @@ def test_list_categories(auth_token_user1, app_url):
                expected_example['names'])
     assert any(translation['lang_id'] == 2 and translation['name'] == 'Electrical Engineering' for translation in
                expected_example['names'])
+
+
+def test_category_same_order(auth_token_user1, app_url):
+    # setup
+    service = CategoryService(auth_token_user1, app_url)
+    previous_order = None
+
+    # test, assert
+    for i in range(10):
+        order = list(map(lambda x: x['category_id'], service.list().json()['result']))
+        if previous_order is not None:
+            assert order == previous_order
+        previous_order = order
