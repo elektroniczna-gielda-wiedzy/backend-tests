@@ -12,7 +12,7 @@ class UserService:
         return requests.get(url=get_user_url, headers={"Authorization": self.token, "Content-Type": "application/json"})
 
     def find(self, query):
-        find_user_url = f"{self.app_url}/api/v1/user?q={query}"
+        find_user_url = f"{self.app_url}/api/v1/user?query={query}"
 
         return requests.get(url=find_user_url,
                             headers={"Authorization": self.token, "Content-Type": "application/json"})
