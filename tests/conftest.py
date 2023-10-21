@@ -1,8 +1,8 @@
 import pytest
-import requests
 from tests.service.entries_service import EntriesService
 from tests.service.answer_service import AnswerService
 from tests.service.comment_service import CommentService
+from tests.service.auth_service import AuthService
 
 
 def pytest_addoption(parser):
@@ -23,15 +23,9 @@ def get_auth_token(app_url):
             password: str,
             remember_me: bool
     ):
-        login_resource = "/api/v1/auth/sign_in"
-        request_body = {
-            "email": email,
-            "password": password,
-            "remember_me": remember_me
-        }
-        response = requests.post(url=app_url + login_resource, json=request_body)
+        auth_service = AuthService(app_url)
+        response = auth_service.login(email, password, remember_me)
         return response.json()['result'][0]['session_token']
-
     return token
 
 
