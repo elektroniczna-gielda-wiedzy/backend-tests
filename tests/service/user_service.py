@@ -23,7 +23,7 @@ class UserService:
             "value":1
         }
 
-        return requests.post(url=ban_user_url,
+        return requests.put(url=ban_user_url,
                              json=request_body,
                             headers={"Authorization": self.token, "Content-Type": "application/json"})
 
@@ -33,6 +33,6 @@ class UserService:
             "value": -1
         }
 
-        return requests.post(url=ban_user_url,
+        return requests.put(url=ban_user_url,
                              json=request_body,
                              headers={"Authorization": self.token, "Content-Type": "application/json"})
