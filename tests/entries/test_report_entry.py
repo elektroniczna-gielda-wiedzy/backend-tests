@@ -14,16 +14,17 @@ def test_add_report(app_url, auth_token_user1, admin_auth_token):
     # test
     service.report(topic, description, entry_id)
     response = admin_service.get_reports()
-    result = response.json()['result'][0]
-    response2 = admin_service.get_report(result['report_id']).json()['result'][0]
+    result_list = response.json()['result'][0]
+    result_details = admin_service.get_report(result_list['report_id']).json()['result'][0]
     # assert
     assert response.ok
-    assert result['topic'] == topic
-    'description' not in result
-    assert response2['description'] == description
-    assert result['reporter_id'] == user_id
-    assert result['report_id'] is not None
-    assert result['entry_id'] == entry_id
+    assert result_list['report_id'] is not None
+    assert result_list['topic'] == topic
+    assert result_list['description'] == description
+    assert result_details['reporter_id'] == user_id
+    assert result_details['entry_id'] == entry_id
+    # TODO - check if reporter_id & entry_id not in list
+    # TODO - it should be a separate test for adding report and getting report
 
 def test_mark_report_test(app_url, auth_token_user1, admin_auth_token):
     # setup
