@@ -13,3 +13,11 @@ class AuthService:
             "remember_me": remember_me
         }
         return requests.post(url=self.app_url + login_resource, json=request_body)
+
+    def reset_password(self, token, current_password, new_password):
+        reset = "/api/v1/auth/reset_password"
+        request_body = {
+            "old_password": current_password,
+            "new_password": new_password
+        }
+        return requests.put(url=self.app_url + reset, json=request_body, headers={"Authorization": token, "Content-Type": "application/json"})
