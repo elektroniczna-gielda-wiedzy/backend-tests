@@ -20,7 +20,7 @@ class UserService:
     def ban(self, user_id):
         ban_user_url = f"{self.app_url}/api/v1/user/{user_id}/ban"
         request_body = {
-            "value":1
+            "value": True
         }
 
         return requests.put(url=ban_user_url,
@@ -30,7 +30,7 @@ class UserService:
     def unban(self, user_id):
         ban_user_url = f"{self.app_url}/api/v1/user/{user_id}/ban"
         request_body = {
-            "value": -1
+            "value": False
         }
 
         return requests.put(url=ban_user_url,
