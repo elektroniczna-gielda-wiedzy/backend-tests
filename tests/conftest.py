@@ -33,7 +33,7 @@ def get_auth_token(app_url):
 def auth_token_user1(get_auth_token):
     return get_auth_token(
         email="adamkowalski@student.agh.edu.pl",
-        password="password",
+        password="L0V3Agh2",
         remember_me=True
     )
 
@@ -42,7 +42,7 @@ def auth_token_user1(get_auth_token):
 def auth_token_user2(get_auth_token):
     return get_auth_token(
         email="mariakowalska@student.agh.edu.pl",
-        password="password",
+        password="L0V3Agh2",
         remember_me=True
     )
 
@@ -51,7 +51,7 @@ def auth_token_user2(get_auth_token):
 def auth_token_user3(get_auth_token):
     return get_auth_token(
         email="marekkrol@student.agh.edu.pl",
-        password="password",
+        password="L0V3Agh2",
         remember_me=True
     )
 
@@ -60,7 +60,7 @@ def auth_token_user3(get_auth_token):
 def admin_auth_token(get_auth_token):
     return get_auth_token(
         email="admin@student.agh.edu.pl",
-        password="password",
+        password="L0V3Agh2",
         remember_me=True
     )
 
