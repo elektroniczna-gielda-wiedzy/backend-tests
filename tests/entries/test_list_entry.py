@@ -78,3 +78,22 @@ def test_list_sort_by_votes(auth_token_user1, auth_token_user2, auth_token_user3
     list_expected = list(map(lambda entry: entry['entry_id'], sorted(response_list, key=lambda entry: entry['votes'] ,reverse=True)))
 
     assert list_given == list_expected
+
+def test_categories_sorted_persistent(auth_token_user1, app_url):
+    # setup
+    service = EntriesService(auth_token_user1, app_url)
+
+    # test
+    prev_list = None
+    for i in range(10):
+        response = service.list(sort=1)
+        response_list = response.json()['result']
+        first_entry_cat = response_list[0]['categories']
+        current_list = list(map(lambda category: category['category_id'], first_entry_cat))
+        if prev_list is not None:
+            assert current_list == prev_list
+        prev_list = current_list
+    # assert
+    assert response.ok
+
+
