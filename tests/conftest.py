@@ -60,7 +60,7 @@ def auth_token_user3(get_auth_token):
 def admin_auth_token(get_auth_token):
     return get_auth_token(
         email="admin@student.agh.edu.pl",
-        password="L0V3Agh2",
+        password="3ngin33rZ125",
         remember_me=True
     )
 
