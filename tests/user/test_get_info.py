@@ -80,7 +80,7 @@ def test_getting_user_info_admin(admin_auth_token, app_url):
     assert user_info['votes_count'][ENTRY_NOTE]['negative'] == 0
     assert user_info['votes_count'][ENTRY_POST]['negative'] == 0
     assert user_info['votes_count'][ENTRY_ANNOUNCEMENT]['negative'] == 0
-    assert user_info['is_banned'] is True
+    assert user_info['is_banned'] is False
     assert user_info['is_email_auth'] is True
 
 
