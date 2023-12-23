@@ -1,5 +1,5 @@
 import requests
-
+from ..constants import TIMEOUT_SECONDS
 
 class ReportService:
     def __init__(self, token, app_url):
@@ -16,21 +16,25 @@ class ReportService:
 
         return requests.post(url=add_report_url,
                              json=request_body,
-                             headers={"Authorization": self.token, "Content-Type": "application/json"})
+                             headers={"Authorization": self.token, "Content-Type": "application/json"},
+                             timeout=TIMEOUT_SECONDS)
 
     def get_reports(self):
         get_report_url = f"{self.app_url}/api/v1/report"
 
         return requests.get(url=get_report_url,
-                            headers={"Authorization": self.token, "Content-Type": "application/json"})
+                            headers={"Authorization": self.token, "Content-Type": "application/json"},
+                            timeout=TIMEOUT_SECONDS)
 
     def get_report(self, report_id):
         get_report_url = f"{self.app_url}/api/v1/report/{report_id}"
 
         return requests.get(url=get_report_url,
-                            headers={"Authorization": self.token, "Content-Type": "application/json"})
+                            headers={"Authorization": self.token, "Content-Type": "application/json"},
+                            timeout=TIMEOUT_SECONDS)
 
     def edit_report(self, report_id, **kwargs):
         edit_entry_url = f"{self.app_url}/api/v1/report/{report_id}"
 
-        return requests.put(url=edit_entry_url, json=kwargs, headers={"Authorization": self.token, "Content-Type": "application/json"})
+        return requests.put(url=edit_entry_url, json=kwargs, headers={"Authorization": self.token, "Content-Type": "application/json"},
+                            timeout=TIMEOUT_SECONDS)

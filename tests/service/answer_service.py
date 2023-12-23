@@ -1,5 +1,5 @@
 import requests
-
+from ..constants import TIMEOUT_SECONDS
 
 class AnswerService:
     def __init__(self, token, app_url):
@@ -14,28 +14,28 @@ class AnswerService:
         if image is not None:
             request_body['image'] = image
 
-        return requests.post(url=add_url, json=request_body, headers={"Authorization": self.auth_token})
+        return requests.post(url=add_url, json=request_body, headers={"Authorization": self.auth_token}, timeout=TIMEOUT_SECONDS)
 
     def edit(self, entry_id, answer_id, **kwargs):
         edit_url = f"{self.app_url}/api/v1/entry/{entry_id}/answer/{answer_id}"
 
-        return requests.put(url=edit_url, json=kwargs, headers={"Authorization": self.auth_token})
+        return requests.put(url=edit_url, json=kwargs, headers={"Authorization": self.auth_token}, timeout=TIMEOUT_SECONDS)
 
     def delete(self, entry_id, answer_id):
         delete_url = f"{self.app_url}/api/v1/entry/{entry_id}/answer/{answer_id}"
 
-        return requests.delete(url=delete_url, headers={"Authorization": self.auth_token})
+        return requests.delete(url=delete_url, headers={"Authorization": self.auth_token}, timeout=TIMEOUT_SECONDS)
 
     def vote(self, entry_id, answer_id, value):
         vote_url = f"{self.app_url}/api/v1/entry/{entry_id}/answer/{answer_id}/vote"
         request_body = {
             "value": value
         }
-        return requests.put(url=vote_url, json=request_body, headers={"Authorization": self.auth_token})
+        return requests.put(url=vote_url, json=request_body, headers={"Authorization": self.auth_token}, timeout=TIMEOUT_SECONDS)
 
     def list(self, entry_id):
         list_url = f"{self.app_url}/api/v1/entry/{entry_id}/answer"
-        return requests.get(list_url, headers={"Authorization": self.auth_token})
+        return requests.get(list_url, headers={"Authorization": self.auth_token}, timeout=TIMEOUT_SECONDS)
 
     def top_answer(self, entry_id, answer_id, value):
         top_answer_url = f"{self.app_url}/api/v1/entry/{entry_id}/answer/{answer_id}/top"
@@ -43,4 +43,4 @@ class AnswerService:
             "value": value
         }
         return requests.put(url=top_answer_url, json=request_body,
-                            headers={"Authorization": self.auth_token, "Content-Type": "application/json"})
+                            headers={"Authorization": self.auth_token, "Content-Type": "application/json"}, timeout=TIMEOUT_SECONDS)

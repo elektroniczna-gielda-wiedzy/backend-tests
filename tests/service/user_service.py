@@ -1,5 +1,5 @@
 import requests
-
+from ..constants import TIMEOUT_SECONDS
 
 class UserService:
     def __init__(self, token, app_url):
@@ -9,13 +9,15 @@ class UserService:
     def get(self, user_id):
         get_user_url = f"{self.app_url}/api/v1/user/{user_id}"
 
-        return requests.get(url=get_user_url, headers={"Authorization": self.token, "Content-Type": "application/json"})
+        return requests.get(url=get_user_url, headers={"Authorization": self.token, "Content-Type": "application/json"},
+                            timeout=TIMEOUT_SECONDS)
 
     def find(self, query):
         find_user_url = f"{self.app_url}/api/v1/user?query={query}"
 
         return requests.get(url=find_user_url,
-                            headers={"Authorization": self.token, "Content-Type": "application/json"})
+                            headers={"Authorization": self.token, "Content-Type": "application/json"},
+                            timeout=TIMEOUT_SECONDS)
 
     def ban(self, user_id):
         ban_user_url = f"{self.app_url}/api/v1/user/{user_id}/ban"
@@ -24,8 +26,9 @@ class UserService:
         }
 
         return requests.put(url=ban_user_url,
-                             json=request_body,
-                            headers={"Authorization": self.token, "Content-Type": "application/json"})
+                            json=request_body,
+                            headers={"Authorization": self.token, "Content-Type": "application/json"},
+                            timeout=TIMEOUT_SECONDS)
 
     def unban(self, user_id):
         ban_user_url = f"{self.app_url}/api/v1/user/{user_id}/ban"
@@ -34,5 +37,6 @@ class UserService:
         }
 
         return requests.put(url=ban_user_url,
-                             json=request_body,
-                             headers={"Authorization": self.token, "Content-Type": "application/json"})
+                            json=request_body,
+                            headers={"Authorization": self.token, "Content-Type": "application/json"},
+                            timeout=TIMEOUT_SECONDS)

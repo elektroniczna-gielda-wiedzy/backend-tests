@@ -1,5 +1,7 @@
 import requests
 
+from ..constants import TIMEOUT_SECONDS
+
 
 class AuthService:
     def __init__(self, app_url):
@@ -12,7 +14,7 @@ class AuthService:
             "password": password,
             "remember_me": remember_me
         }
-        return requests.post(url=self.app_url + login_resource, json=request_body)
+        return requests.post(url=self.app_url + login_resource, json=request_body, timeout=TIMEOUT_SECONDS)
 
     def reset_password(self, token, current_password, new_password):
         reset = "/api/v1/auth/reset_password"
@@ -20,4 +22,5 @@ class AuthService:
             "old_password": current_password,
             "new_password": new_password
         }
-        return requests.put(url=self.app_url + reset, json=request_body, headers={"Authorization": token, "Content-Type": "application/json"})
+        return requests.put(url=self.app_url + reset, json=request_body, headers={"Authorization": token, "Content-Type": "application/json"},
+                            timeout=TIMEOUT_SECONDS)
